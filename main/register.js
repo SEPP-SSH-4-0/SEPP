@@ -1,6 +1,6 @@
 import { auth , db } from './firebase-config.js';
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
 const signUpForm = document.getElementById("signUpForm");
 
@@ -14,22 +14,20 @@ signUpForm.addEventListener("submit", (event) => {
         .then((userCredential) => {
             const user = userCredential.user;
 
-            // Save user data to Realtime Database
+            // record the user's data to firebase's realtime db
             set(ref(db, `users/${user.uid}`), {
                 email: user.email,
-                householdId: null // Initially, no household is associated
+                householdId: null 
             })
             .then(() => {
                 alert("User signed up and saved to database!");
-                window.location.href = "login.html"; // Redirect to login after account creation
+                window.location.href = "login.html"; // redirect to login.html after successful account creation
             })
             .catch((error) => {
-                console.error("Error saving user to database:", error);
                 alert("Error creating account. Please try again.");
             });
         })
         .catch((error) => {
-            console.error("Error signing up:", error.message);
             alert(error.message);
         });
 });

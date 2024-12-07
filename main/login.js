@@ -1,4 +1,4 @@
-import { auth } from "./firebase-config.js"; // Importing the initialized auth object from firebase-config.js
+import { auth } from "./firebase-config.js"; 
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 const login = document.getElementById("login");
@@ -11,7 +11,7 @@ login.addEventListener("click", (event) => {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
         const user = userCredential.user;
-        window.location.href = "household.html"; // Redirect after successful login
+        window.location.href = "household.html";
     })
     .catch((error) => {
         const errorMessage = error.message;
