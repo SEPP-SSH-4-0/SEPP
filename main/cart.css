@@ -1,0 +1,23 @@
+/* file for styling cart.html */
+
+#shared_cart_section {
+    padding: 40px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#checkout_button button {
+    background-color: #61bc64;
+    color: white;
+    font-size: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-colour 0.3s ease;
+}
+
+#checkout_button button:hover {
+    background-color: #45a049 ;
+}
