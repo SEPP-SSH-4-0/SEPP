@@ -75,7 +75,7 @@ function addToSharedCart(productId, productName, productPrice) {
                                 total: currentTotal + (productPrice * quantity)
                             });
 
-                            // to increase cart count
+                            // increase cart count
                             incrementCartCount(quantity);
                             updateCartCount(householdId);
                         });
@@ -90,5 +90,26 @@ function addToSharedCart(productId, productName, productPrice) {
             alert("Please log in first.");
             window.location.href = "login.html";
         }
+    });
+}
+
+function incrementCartCount(quantity) {
+    const currentCount = parseInt(cartCountElement.textContent);
+    const newCount = isNaN(currentCount) ? quantity : currentCount + quantity;
+    cartCountElement.textContent = newCount;
+}
+
+function updateCartCount(householdId) {
+    const cartRef = ref(db, `households/${householdId}/cart`);
+    onValue(cartRef, (snapshot) => {
+        let totalItems = 0;
+
+        snapshot.forEach(userCart => {
+            userCart.child('items').forEach(item => {
+                totalItems += item.val().quantity;
+            });
+        });
+
+        cartCountElement.textContent = totalItems;  
     });
 }
