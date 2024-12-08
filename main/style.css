@@ -1,0 +1,237 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    margin: 0 20px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #e6e6e6;
+}
+
+section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.item {
+    width: 225px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.item h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.item p {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.item input {
+    width: 60px;
+    padding: 5px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Cart Button Styles */
+.cart-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.cart-button:hover {
+    transform: scale(1.1);
+}
+
+.cart-button img {
+    width: 30px;
+    height: 30px;
+}
+
+.cart-button span {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #555;
+}
+
+
+
+#cart-section {
+    padding: 40px 20px;
+    display: flex;
+    justify-content: space-between; 
+    gap: 30px; 
+    flex-wrap: wrap;
+}
+
+#cart-items-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-bottom: 0;
+}
+
+#cart-summary-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    margin-top: 0;
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+#fees-box {
+    width: auto; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc; 
+    margin-top: 1px; 
+}
+
+.fees-box h2 {
+    margin-top: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.fees-box p {
+    font-size: 1em;
+    margin: 8px 0;
+}
+
+.fees-box strong {
+    font-weight: bold;
+}
+
+.cart-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.cart-product {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.remove-item-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #61bc64; 
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.remove-item-btn:hover {
+    background-color: #45a049;
+}
+
+
