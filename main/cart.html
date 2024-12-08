@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
-    <!-- link stylesheet -->
+    <link rel="stylesheet" href="cart.css">
 </head>
 <body>
 
@@ -13,19 +13,27 @@
         <h1>Shopping Cart</h1>
     </header>
 
-    <section>
-        <h2> Your Shared Cart </h2>
-        <!-- section to display each user's cart items -->
+    <section id="shared_cart_section">
+        <!-- LHS of the page - shared cart + fees details -->
+        <div>
+            <h2> Your Shared Cart </h2> <!-- display each user's cart items -->
+
         
-        <h2> Fees </h2>
-        <!-- section to include delivery fees & service fees etc -->
-        
-        <h2> Cart Summary </h2>
-        <!-- section to display cart summary-->
+            <h2> Fees </h2> <!-- delivery fees & service fees etc -->
+
+        </div>
+
+        <!-- RHS of the page - cart sumamry -->
+        <div>
+            <h2> Cart Summary </h2> <!-- display cart summary-->
+
+        </div>
     </section>
 
-    <button> Checkout </button>
-    
+    <div id="checkout_button">
+        <button> Checkout </button>
+    </div>
+
     <script type="module" src="cart.js"></script>
 
 </body>
