@@ -43,6 +43,19 @@ displayProducts('vegetables', 'vegetables-container');
 displayProducts('fruits', 'fruits-container');
 displayProducts('Meat & Poultry', 'meat-container');
 
+// displays the cart count between household users
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const userRef = ref(db, `users/${user.uid}`);
+        get(userRef).then(snapshot => {
+            if (snapshot.exists()) {
+                const householdId = snapshot.val().householdId;
+                updateCartCount(householdId);
+            }
+        });
+    }
+});
+
 function addToSharedCart(productId, productName, productPrice) {
     const quantityInput = document.getElementById(`${productId}-quantity`);
     const quantity = parseInt(quantityInput.value);
