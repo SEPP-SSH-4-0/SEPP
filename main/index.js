@@ -1,6 +1,7 @@
 // index.hmtl functions 
-
-import { db } from "./firebase-config.js"; 
+import { ref, get, push, update } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+import { auth, db } from "./firebase-config.js"; 
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 // fetch data from firebase realtime db to be displayed
 function displayProducts(category, containerId) {
@@ -36,4 +37,58 @@ function displayProducts(category, containerId) {
             console.error("No products available");
         }
     }).catch(error => console.error("Error fetching products:", error));
+}
+
+displayProducts('vegetables', 'vegetables-container');
+displayProducts('fruits', 'fruits-container');
+displayProducts('Meat & Poultry', 'meat-container');
+
+function addToSharedCart(productId, productName, productPrice) {
+    const quantityInput = document.getElementById(`${productId}-quantity`);
+    const quantity = parseInt(quantityInput.value);
+
+    if (isNaN(quantity) || quantity <= 0) {
+        alert("Please enter a valid quantity.");
+        return;
+    }
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const userId = user.uid;
+            const userRef = ref(db, `users/${userId}`);
+
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const householdId = snapshot.val().householdId;
+
+                    const cartRef = ref(db, `households/${householdId}/cart/${userId}/items`);
+                    push(cartRef, {
+                        productId,
+                        name: productName,
+                        price: productPrice,
+                        quantity
+                    }).then(() => {
+                        const userTotalRef = ref(db, `households/${householdId}/cart/${userId}/total`);
+                        get(userTotalRef).then(totalSnapshot => {
+                            const currentTotal = totalSnapshot.exists() ? totalSnapshot.val() : 0;
+                            update(userTotalRef, {
+                                total: currentTotal + (productPrice * quantity)
+                            });
+
+                            // to increase cart count
+                            incrementCartCount(quantity);
+                            updateCartCount(householdId);
+                        });
+                    }).catch(error => {
+                        alert("Failed to add item to cart.");
+                    });
+                } else {
+                    alert("Error fetching information.");
+                }
+            });
+        } else {
+            alert("Please log in first.");
+            window.location.href = "login.html";
+        }
+    });
 }
