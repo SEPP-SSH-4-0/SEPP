@@ -1,8 +1,0 @@
-{
-    "products": [
-      { "id": 1, "name": "Apples", "price": 3.5, "available": true },
-      { "id": 2, "name": "Bananas", "price": 1.2, "available": true },
-      { "id": 3, "name": "Milk", "price": 2.5, "available": false }
-    ]
-  }
-  
