@@ -1,0 +1,60 @@
+*::after,
+*::before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url('bg1.jpeg');
+    background-size: cover;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.background {
+    width: 430px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+
+.background .shape {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.container {
+    width: 430px;
+    background-color: rgba(255, 255, 255, 0.13);
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 50px 35px;
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    text-align: center;
+    color: black;
+}
+
+.container h2 {
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    line-height: 36px;
+    text-align: center;
+}
+
+.container h3 {
+    font-size: 22px;
+    font-weight: 400;
+    margin: 20px 0 10px;
+    line-height: 28px;
+    text-align: center;
+}
