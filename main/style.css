@@ -47,7 +47,6 @@ section h2 {
     color: #333;
 }
 
-/* product containers */
 .product-container {
     display: flex;
     flex-wrap: wrap;
@@ -97,7 +96,6 @@ section h2 {
     border: 1px solid #ccc;
 }
 
-/* add to cart button */
 button {
     background-color: #4CAF50;
     color: white;
@@ -112,15 +110,9 @@ button:hover {
     background-color: #45a049;
 }
 
-/* cart icon */
-.cart-button img {
-    width: 28px;
-    height: 28px;
-} 
-
 .cart-button {
     position: fixed;
-    top: 10px;
+    top: 20px;
     right: 20px;
     background-color: #4CAF50;
     padding: 10px;
@@ -132,6 +124,11 @@ button:hover {
 
 .cart-button:hover {
     transform: scale(1.1);
+}
+
+.cart-button img {
+    width: 30px;
+    height: 30px;
 }
 
 .cart-button span {
@@ -151,3 +148,92 @@ footer {
     background-color: #f4f4f4;
     color: #555;
 }
+
+
+
+#cart-section {
+    padding: 40px 20px;
+    display: flex;
+    justify-content: space-between; 
+    gap: 30px; 
+    flex-wrap: wrap;
+}
+
+#cart-items-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-bottom: 0;
+}
+
+#cart-summary-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    margin-top: 0;
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+#fees-box {
+    width: auto; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc; 
+    margin-top: 1px; 
+}
+
+.fees-box h2 {
+    margin-top: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.fees-box p {
+    font-size: 1em;
+    margin: 8px 0;
+}
+
+.fees-box strong {
+    font-weight: bold;
+}
+
+.cart-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.cart-product {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.remove-item-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #61bc64; 
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.remove-item-btn:hover {
+    background-color: #45a049;
+}
+
+
+=======
+/* styling for index.html */
+>>>>>>> df823d28b71f4dba58f6f6946b4ef4d491309fc3
