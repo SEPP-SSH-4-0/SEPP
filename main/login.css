@@ -1,12 +1,14 @@
-*::after,*::before{
+*::after,
+*::before {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
 body {
-    background-image: url('bg2.jpeg');
+    background-image: url('bg1.jpeg');
     background-size: cover;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .background {
@@ -25,80 +27,86 @@ body {
     border-radius: 50%;
 }
 
-.shape:first-child {
-    background: linear-gradient(#1845ad, #23a2f6);
-    left: -80px;
-    top: -80px;
-}
-
-.shape:last-child {
-    background: linear-gradient(#ff512f, #f09819);
-    right: -30px;
-    bottom: -80px;
-}
-
 form {
-    height: 520px;
-    width: 400px;
-    background-color: rgba(255,255,255,0.13);
+    width: 430px;
+    background-color: rgba(255, 255, 255, 0.13);
     position: absolute;
     transform: translate(-50%, -50%);
     border-radius: 10px;
     top: 50%;
     left: 50%;
     backdrop-filter: blur(10px);
-    border:2px solid rgba(255,255,255,0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
     padding: 50px 35px;
     box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-}
-
-form * {
-    color: white;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    letter-spacing: 0.5px;
-    outline: none;
-    border: none;
-
+    text-align: center;
+    color: black;
 }
 
 form h3 {
-    font-size: 32px;
-    font-weight: 500;
-    line-height: 42px;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 30px;
+    line-height: 28px;
     text-align: center;
 }
 
 form label {
     display: block;
-    margin-top: 30px;
     font-size: 16px;
     font-weight: 500;
+    text-align: left;
+    margin-top: 20px;
+    margin-right: 18px;
 }
 
 input {
     display: block;
-    height: 50px;
     width: 100%;
-    background-color: rgba(255,255,255,0.0713);
-    border-radius: 3px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 5px;
     padding: 0 10px;
-    margin-top: 8px;
+    margin-top: 5px;
     font-size: 14px;
-    font-weight: 300;
+    color: black;
 }
 
-::placeholder {
-    color : #e5e5e5;
+input::placeholder {
+    color: #e5e5e5;
 }
 
 button {
-    margin-top: 30px;
-    width: 100%;
-    background-color: white;
-    padding: 15px 10px;
-    font-size: 18px;
-    font-weight: 500;
-    cursor: pointer;
+    margin-top: 20px;
+    width: 300px;
+    margin-top: 38px;
+    background-color: #e5e5e5;
     color: #080710;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 500;
     border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #8d8b8b;
+}
+
+.form p {
+    margin-top: 15px;
+    color: black;
+    text-align: center;
+    font-size: 14px;
+}
+
+.form a {
+    color: rgb(40, 13, 173);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.form a:hover {
+    text-decoration: underline;
 }
