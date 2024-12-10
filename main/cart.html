@@ -20,19 +20,25 @@
         <div>
             <h2> Your Shared Cart </h2> <!-- display each user's cart items -->
 
+            <div id="cart-summary"></div>
         
-            <h2> Fees </h2> <!-- delivery fees & service fees etc -->
+            <div id="fees-box" class="fees-box">
+                <h2> Fees </h2> <!-- delivery fees & service fees etc -->
+                <p><strong>Delivery Fee:</strong> $<span id="delivery-fee">5.00</span></p>
+                <p><strong>Service Fee:</strong> $<span id="service-fee">2.00</span></p>
+                <p><strong>Total Amount:</strong> $<span id="total-amount">0.00</span></p>
+            </div>
 
         </div>
 
         <!-- RHS of the page - cart sumamry -->
-        <div>
-            <h2> Cart Summary </h2> <!-- display cart summary-->
-
+        <div id="cart-summary-container">
+            <h2> Cart Summary </h2> 
+            <div id="cart-summary-details"></div> <!-- breakdown of each user's total -->
         </div>
     </section>
 
-    <div id="checkout_button">
+    <div id="checkout_button" onclick="window.location.href='receipt.html'">
         <button> Checkout </button>
     </div>
 
