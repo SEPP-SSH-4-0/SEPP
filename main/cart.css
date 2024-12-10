@@ -7,6 +7,43 @@
     justify-content: space-between;
 }
 
+#cart-items-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-bottom: 0;
+}
+
+#cart-summary-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    margin-top: 0;
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.cart-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.cart-product {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+/* checkout button */
 #checkout_button button {
     background-color: #61bc64;
     color: white;
@@ -18,6 +55,67 @@
     transition: background-colour 0.3s ease;
 }
 
+#checkout-btn { /* to center the checkout button */
+    display: flex;         
+    justify-content: center; 
+    align-items: center;     
+    width: 100%;             
+    margin-bottom: 30px;        
+}
+
 #checkout_button button:hover {
     background-color: #45a049 ;
+}
+
+/* fees  section */
+#fees-box {
+    width: auto; /* Ensure the fees box takes up the full width of the parent container */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc; /* Border for the Fees box */
+    margin-top: 1px; /* Space between fees and other sections */
+}
+
+.fees-box h2 {
+    margin-top: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.fees-box p {
+    font-size: 1em;
+    margin: 8px 0;
+}
+
+.fees-box strong {
+    font-weight: bold;
+}
+
+/* remove item button */
+.remove-item-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #61bc64; /* Button color */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.remove-item-btn:hover {
+    background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+    #cart-section {
+        flex-direction: column; /* Stack sections vertically on small screens */
+    }
+
+    #cart-items-container,
+    #cart-summary-container {
+        flex: 1; /* Allow both sections to take full width */
+        margin-bottom: 20px; /* Optional spacing between stacked sections */
+    }
+
 }
