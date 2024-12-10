@@ -12,34 +12,32 @@
 
     <header>
         <h1>Shopping Cart</h1>
-        <nav><a href="index.html">Go back to store</a></nav>
+        <nav>
+            <a href="index.html">Back to Store</a>
+        </nav>
     </header>
 
-    <section id="shared_cart_section">
-        <!-- LHS of the page - shared cart + fees details -->
-        <div>
-            <h2> Your Shared Cart </h2> <!-- display each user's cart items -->
-
+    <section id="cart-section">
+        <div id="cart-items-container">
+            <h2>Your Cart</h2>
             <div id="cart-summary"></div>
-        
             <div id="fees-box" class="fees-box">
-                <h2> Fees </h2> <!-- delivery fees & service fees etc -->
-                <p><strong>Delivery Fee:</strong> $<span id="delivery-fee">5.00</span></p>
-                <p><strong>Service Fee:</strong> $<span id="service-fee">2.00</span></p>
-                <p><strong>Total Amount:</strong> $<span id="total-amount">0.00</span></p>
+                <h2>Fees</h2>
+                <hr />
+                <p><strong>Delivery Fee:</strong> £<span id="delivery-fee">0.00</span></p>
+                <p><strong>Service Fee:</strong> £<span id="service-fee">0.00</span></p>
+                <p><strong>Total Amount:</strong> £<span id="total-amount">0.00</span></p>
             </div>
-
         </div>
 
-        <!-- RHS of the page - cart sumamry -->
         <div id="cart-summary-container">
-            <h2> Cart Summary </h2> 
-            <div id="cart-summary-details"></div> <!-- breakdown of each user's total -->
+            <h2>Cart Summary</h2>
+            <div id="cart-summary-details"></div>
         </div>
     </section>
 
-    <div id="checkout_button" onclick="window.location.href='receipt.html'">
-        <button> Checkout </button>
+    <div id="checkout-btn" onclick="window.location.href='receipt.html'">
+        <button>Checkout</button>
     </div>
 
     <script type="module" src="cart.js"></script>

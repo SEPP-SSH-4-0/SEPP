@@ -1,45 +1,52 @@
-// for handling cart.html's interactions
-
 import { auth, db } from "./firebase-config.js"; 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { ref, onValue, remove } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+import { ref, onValue, remove, get } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+const cartSummary = document.getElementById("cart-summary");
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const userRef = ref(db, `users/${user.uid}`);
-        onValue(userRef, (snapshot) => {
+        get(userRef).then((snapshot) => {
             if (snapshot.exists()) {
-                const householdId = snapshot.val().householdId; 
+                const householdId = snapshot.val().householdId;
                 fetchCartData(householdId);
             } else {
                 alert("User not found in the database.");
             }
+        }).catch((error) => {
+            console.error("Error fetching user data:", error);
         });
     } else {
         alert("Please log in first.");
     }
 });
 
-
 function fetchCartData(householdId) {
     const cartRef = ref(db, `households/${householdId}/cart`);
 
     onValue(cartRef, (snapshot) => {
         cartSummary.innerHTML = "";
-
         let grandTotal = 0; 
-        let userTasks = []; // to track async user processing
+        let userTasks = []; 
         let userBreakdowns = []; 
+        let usersWithItems = 0; 
+        let totalItems = 0;
+
+        if (!snapshot.exists()) {
+            console.log("No cart data found for this household.");
+            cartSummary.innerHTML = `<p>Your cart is empty.</p>`;
+            return;
+        }
 
         snapshot.forEach((userCart) => {
             const userId = userCart.key; 
-            
             const userTask = new Promise((resolve, reject) => {
                 const userRef = ref(db, `users/${userId}`);
                 onValue(userRef, (userSnapshot) => {
                     if (userSnapshot.exists()) {
-                        const userEmail = userSnapshot.val().email; // get user's email
-        
+                        const userEmail = userSnapshot.val().email;
+
                         let userTotal = 0; 
                         let userCartHtml = `
                             <div class="cart-item">
@@ -51,15 +58,20 @@ function fetchCartData(householdId) {
                             const product = items[itemId];
                             const itemTotal = product.price * product.quantity;
                             userTotal += itemTotal;
-        
+                            totalItems += product.quantity;
+
                             userCartHtml += `
                                 <div class="cart-product">
-                                    <p>${product.name} - $${product.price.toFixed(2)} x ${product.quantity} = $${itemTotal.toFixed(2)}</p>
+                                    <p>${product.name} - £${product.price.toFixed(2)} x ${product.quantity} = £${itemTotal.toFixed(2)}</p>
                                     <button class="remove-item-btn" data-user-id="${userId}" data-item-id="${itemId}">Remove</button>
                                 </div>
                             `;
                         });
-        
+
+                        if (Object.keys(items).length > 0) {
+                            usersWithItems++;
+                        }
+
                         userCartHtml += `
                                 <p><strong>Total for User ${userEmail}: £${userTotal.toFixed(2)}</strong></p>
                             </div>
@@ -73,7 +85,6 @@ function fetchCartData(householdId) {
                             total: userTotal,
                         });
 
-                        // remove item function
                         document.querySelectorAll(".remove-item-btn").forEach((btn) => {
                             btn.addEventListener("click", (event) => {
                                 const userId = event.target.getAttribute("data-user-id");
@@ -93,40 +104,10 @@ function fetchCartData(householdId) {
             userTasks.push(userTask);
         });
 
-        // wait for all user data to be processed 
         Promise.all(userTasks).then(() => {
-            // fees
-            const deliveryFee = 3.99;
-            const serviceFee = 2.79;
-            const totalAmount = grandTotal + deliveryFee + serviceFee;
-
-            // splitting fees equally
-            const numUsers = userBreakdowns.length;
-            const splitDelivery = deliveryFee / numUsers;
-            const splitService = serviceFee / numUsers;
-
-            // each user breakdown
-            const cartSummaryDetails = document.getElementById("cart-summary-details");
-            cartSummaryDetails.innerHTML = ""; // Clear previous content
-            userBreakdowns.forEach((user) => {
-                const userFinalTotal = user.total + splitDeliveryFee + splitServiceFee;
-                cartSummaryDetails.innerHTML += `
-                    <div class="cart-summary-user">
-                        <h4>${user.email}'s Breakdown</h4>
-                        <p>Subtotal (Items): $${user.total.toFixed(2)}</p>
-                        <p>Delivery Fee Share: $${splitDelivery.toFixed(2)}</p>
-                        <p>Service Fee Share: $${splitService.toFixed(2)}</p>
-                        <p><strong>Final Total: $${userFinalTotal.toFixed(2)}</strong></p>
-                        <hr />
-                    </div>
-                `;
-            });
-
-            document.getElementById("delivery-fee").innerText = deliveryFee.toFixed(2);
-            document.getElementById("service-fee").innerText = serviceFee.toFixed(2);
-            document.getElementById("total-amount").innerText = totalAmount.toFixed(2);
+            calculateFees(grandTotal, usersWithItems, userBreakdowns, totalItems);
         }).catch((error) => {
-            console.error("Error in processing user data:", error);
+            console.error("Error processing user data:", error);
         });
     });
 }
@@ -135,10 +116,54 @@ function removeCartItem(householdId, userId, itemId){
     const itemRef = ref(db, `households/${householdId}/cart/${userId}/items/${itemId}`);
     remove(itemRef)
         .then(() => {
-            alert("Item removed successfully.");
+            console.log(`Item ${itemId} removed for user ${userId}.`);
         })
         .catch((error) => {
             console.error("Error removing item:", error);
             alert("Failed to remove item. Please try again.");
         });
 }
+
+function calculateFees(grandTotal, usersWithItems, userBreakdowns, totalItems) {
+    const deliveryFee = 3.99;
+    const serviceFee = 2.79;
+
+    const cartSummaryDetails = document.getElementById("cart-summary-details");
+    cartSummaryDetails.innerHTML = ""; 
+
+    if (usersWithItems > 0) {
+        const splitDeliveryFee = deliveryFee / usersWithItems;
+        const splitServiceFee = serviceFee / usersWithItems;
+
+        userBreakdowns.forEach((user) => {
+            let userFinalTotal = user.total;
+
+            if (user.total > 0) {
+                userFinalTotal += splitDeliveryFee + splitServiceFee;
+            }
+
+            cartSummaryDetails.innerHTML += `
+                <div class="cart-summary-user">
+                    <h4>${user.email}'s Breakdown</h4>
+                    <p>Subtotal (Items): £${user.total.toFixed(2)}</p>
+                    ${user.total > 0 ? `<p>Delivery Fee Share: £${splitDeliveryFee.toFixed(2)}</p>` : ""}
+                    ${user.total > 0 ? `<p>Service Fee Share: £${splitServiceFee.toFixed(2)}</p>` : ""}
+                    <p><strong>Final Total: £${userFinalTotal.toFixed(2)}</strong></p>
+                    <hr/>
+                </div>
+            `;
+        });
+
+        document.getElementById("delivery-fee").innerText = deliveryFee.toFixed(2);
+        document.getElementById("service-fee").innerText = serviceFee.toFixed(2);
+        document.getElementById("total-amount").innerText = (grandTotal + deliveryFee + serviceFee).toFixed(2);
+    } 
+
+    else {
+        cartSummaryDetails.innerHTML = `<p>No users have items in their cart, so no fees are applied.</p>`;
+        document.getElementById("delivery-fee").innerText = 'No delivery fee (No items in cart)';
+        document.getElementById("service-fee").innerText = 'No service fee (No items in cart)';
+        document.getElementById("total-amount").innerText = grandTotal.toFixed(2);
+    }
+}
+

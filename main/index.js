@@ -1,9 +1,9 @@
-// index.hmtl functions 
-import { ref, get, push, update } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+import { ref, get, push, update, onValue } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 import { auth, db } from "./firebase-config.js"; 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
-// fetch data from firebase realtime db to be displayed
+const cartCountElement = document.getElementById('cart-count'); 
+
 function displayProducts(category, containerId) {
     const dbRef = ref(db, 'products');
     get(dbRef).then((snapshot) => {
@@ -22,13 +22,10 @@ function displayProducts(category, containerId) {
                         <h3>${product.name}</h3>
                         <p>£${product.price.toFixed(2)}</p>
                         <input type="number" value="1" min="1" id="${productId}-quantity">
-                        <button id="add-to-cart-${productId}">
-                            Add to Cart
-                        </button>
+                        <button id="add-to-cart-${productId}">Add to Cart</button>
                     `;
                     container.appendChild(productElement);
 
-                    // add item to cart button functions
                     const addToCartButton = document.getElementById(`add-to-cart-${productId}`);
                     addToCartButton.addEventListener('click', () => addToSharedCart(productId, product.name, product.price));
                 }
@@ -38,23 +35,6 @@ function displayProducts(category, containerId) {
         }
     }).catch(error => console.error("Error fetching products:", error));
 }
-
-displayProducts('vegetables', 'vegetables-container');
-displayProducts('fruits', 'fruits-container');
-displayProducts('Meat & Poultry', 'meat-container');
-
-// displays the cart count between household users
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        const userRef = ref(db, `users/${user.uid}`);
-        get(userRef).then(snapshot => {
-            if (snapshot.exists()) {
-                const householdId = snapshot.val().householdId;
-                updateCartCount(householdId);
-            }
-        });
-    }
-});
 
 function addToSharedCart(productId, productName, productPrice) {
     const quantityInput = document.getElementById(`${productId}-quantity`);
@@ -88,15 +68,15 @@ function addToSharedCart(productId, productName, productPrice) {
                                 total: currentTotal + (productPrice * quantity)
                             });
 
-                            // increase cart count
                             incrementCartCount(quantity);
                             updateCartCount(householdId);
                         });
                     }).catch(error => {
+                        console.error("Error adding to cart:", error);
                         alert("Failed to add item to cart.");
                     });
                 } else {
-                    alert("Error fetching information.");
+                    alert("Error fetching household information.");
                 }
             });
         } else {
@@ -123,6 +103,22 @@ function updateCartCount(householdId) {
             });
         });
 
-        cartCountElement.textContent = totalItems;  
+        cartCountElement.textContent = totalItems;  // update  cart count based on fb data
     });
 }
+
+displayProducts('vegetables', 'vegetables-container');
+displayProducts('fruits', 'fruits-container');
+displayProducts('Meat & Poultry', 'meat-container');
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const userRef = ref(db, `users/${user.uid}`);
+        get(userRef).then(snapshot => {
+            if (snapshot.exists()) {
+                const householdId = snapshot.val().householdId;
+                updateCartCount(householdId);
+            }
+        });
+    }
+});

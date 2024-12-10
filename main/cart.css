@@ -1,10 +1,35 @@
 /* file for styling cart.html */
 
-#shared_cart_section {
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+}
+
+#cart-section {
     padding: 40px 20px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-between; 
+    gap: 30px; 
+    flex-wrap: wrap; 
 }
 
 #cart-items-container {
@@ -29,53 +54,14 @@
     background-color: #f9f9f9;
 }
 
-.cart-item {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-}
-
-.cart-product {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-}
-
-/* checkout button */
-#checkout_button button {
-    background-color: #61bc64;
-    color: white;
-    font-size: 15px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-colour 0.3s ease;
-}
-
-#checkout-btn { /* to center the checkout button */
-    display: flex;         
-    justify-content: center; 
-    align-items: center;     
-    width: 100%;             
-    margin-bottom: 30px;        
-}
-
-#checkout_button button:hover {
-    background-color: #45a049 ;
-}
-
-/* fees  section */
 #fees-box {
-    width: auto; /* Ensure the fees box takes up the full width of the parent container */
+    width: auto; 
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ccc; /* Border for the Fees box */
-    margin-top: 1px; /* Space between fees and other sections */
+    border: 1px solid #ccc; 
+    margin-top: 1px; 
 }
 
 .fees-box h2 {
@@ -93,11 +79,25 @@
     font-weight: bold;
 }
 
-/* remove item button */
+.cart-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.cart-product {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
 .remove-item-btn {
     margin-left: 10px;
     padding: 5px 10px;
-    background-color: #61bc64; /* Button color */
+    border-radius: 5px;
+    background-color: #61bc64; 
     color: white;
     border: none;
     cursor: pointer;
@@ -107,15 +107,39 @@
     background-color: #45a049;
 }
 
+#checkout-btn {
+    display: flex;          
+    justify-content: center; 
+    align-items: center;     
+    width: 100%;            
+    margin-bottom: 30px;        
+}
+
+#checkout-btn button {
+    padding: 10px 20px; 
+    font-size: 16px;     
+    background-color: #61bc64; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#checkout-btn button:hover {
+    background-color: #45a049; 
+}
+
+
 @media (max-width: 768px) {
     #cart-section {
-        flex-direction: column; /* Stack sections vertically on small screens */
+        flex-direction: column; 
     }
 
     #cart-items-container,
     #cart-summary-container {
-        flex: 1; /* Allow both sections to take full width */
-        margin-bottom: 20px; /* Optional spacing between stacked sections */
+        flex: 1; 
+        margin-bottom: 20px; 
     }
 
 }

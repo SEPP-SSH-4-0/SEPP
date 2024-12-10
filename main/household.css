@@ -6,7 +6,6 @@
 }
 
 body {
-    background-image: url('bg1.jpeg');
     background-size: cover;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -78,10 +77,10 @@ input {
     height: 40px;
     background-color: rgba(255, 255, 255, 0.07);
     border-radius: 5px;
-    padding: 0 10px;
+    padding: 10 10px;
     margin-top: 5px;
     font-size: 14px;
-    color: white;
+    color: black;
 }
 
 input::placeholder {
@@ -90,11 +89,12 @@ input::placeholder {
 
 /* Button styling */
 button {
+    margin-left: 2px;
     margin-top: 20px;
     width: 100%;
     background-color: #e5e5e5;
     color: #080710;
-    padding: 10px 0;
+    padding: 10px 10px;
     font-size: 16px;
     font-weight: 500;
     border-radius: 5px;
@@ -106,11 +106,11 @@ button:hover {
     background-color: #8d8b8b;
 }
 
-/* Back link styling */
+/* Back to login */
 .container a {
     display: inline-block;
     margin-top: 15px;
-    color: black;
+    color: rgb(50, 20, 173);
     text-decoration: none;
     font-size: 14px;
     transition: all 0.3s ease;

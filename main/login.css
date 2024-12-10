@@ -6,7 +6,6 @@
 }
 
 body {
-    background-image: url('bg1.jpeg');
     background-size: cover;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -18,13 +17,6 @@ body {
     transform: translate(-50%, -50%);
     left: 50%;
     top: 50%;
-}
-
-.background .shape {
-    height: 200px;
-    width: 200px;
-    position: absolute;
-    border-radius: 50%;
 }
 
 form {
