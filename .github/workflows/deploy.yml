@@ -17,4 +17,7 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         branch: gh-pages  
-        folder: main      
+        folder: main   
+        token: ${{ secrets.GH_TOKEN }} 
+        clean: true
+        force: true   
