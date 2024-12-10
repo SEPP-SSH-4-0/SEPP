@@ -11,7 +11,7 @@ login.addEventListener("click", (event) => {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
         const user = userCredential.user;
-        window.location.href = "household.html";
+        window.location.href = "main/household.html";
     })
     .catch((error) => {
         const errorMessage = error.message;
