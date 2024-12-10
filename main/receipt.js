@@ -7,7 +7,7 @@ onAuthStateChanged(auth, (user) => {
         const userRef = ref(db, `users/${user.uid}`);
         onValue(userRef, (snapshot) => {
             if (snapshot.exists()) {
-                const householdId = snapshot.val().householdId; 
+                const householdId = snapshot.val().householdId;
                 fetchCartData(householdId);
             } else {
                 alert("User not found in the database.");
@@ -17,22 +17,23 @@ onAuthStateChanged(auth, (user) => {
         alert("Please log in first.");
     }
 });
+
 function fetchCartData(householdId) {
     const cartRef = ref(db, `households/${householdId}/cart`);
     let grandTotal = 0; 
-
-
     const usersContainer = document.getElementById("users-container");
 
     onValue(cartRef, (snapshot) => {
         console.log("Cart snapshot received:", snapshot.val());
 
         let userPromises = [];
+        let usersWithItems = 0;
 
         snapshot.forEach((userCart) => {
             const userId = userCart.key; 
             const userRef = ref(db, `users/${userId}`);
-            //Create promise
+
+            // Create promises
             userPromises.push(
                 new Promise((resolve, reject) => {
                     onValue(userRef, (userSnapshot) => {
@@ -45,37 +46,50 @@ function fetchCartData(householdId) {
 
                             if (Object.keys(items).length === 0) {
                                 userItemsHtml += "<p>No items in the cart.</p>";
+                            } else {
+                                Object.keys(items).forEach((itemId) => {
+                                    const product = items[itemId];
+                                    const itemTotal = product.price * product.quantity;
+                                    userTotal += itemTotal;
+
+                                    userItemsHtml += `
+                                        <div>
+                                            <p>${product.name} - £${product.price.toFixed(2)} x ${product.quantity} = £${itemTotal.toFixed(2)}</p>
+                                        </div>
+                                    `;
+                                });
+
+                                usersWithItems++;
                             }
 
-                            Object.keys(items).forEach((itemId) => {
-                                const product = items[itemId];
-                                const itemTotal = product.price * product.quantity;
-                                userTotal += itemTotal;
-
-                                userItemsHtml += `
-                                    <div>
-                                        <p>${product.name} - £${product.price.toFixed(2)} x ${product.quantity} = £${itemTotal.toFixed(2)}</p>
-                                    </div>
-                                `;
-                            });
-                            //Calculation
                             const deliveryFee = 3.99;
                             const serviceFee = 2.79;
-                            const numUsers = snapshot.size; 
-                            const splitDeliveryFee = deliveryFee / numUsers;
-                            const splitServiceFee = serviceFee / numUsers;
-                            //Fees breakdown
-                            userItemsHtml += ` 
-                                <p>Delivery Fee Share: £${splitDeliveryFee.toFixed(2)}</p>
-                                <p>Service Fee Share: £${splitServiceFee.toFixed(2)}</p>
-                                <p><strong>Total for ${userEmail}: £${(userTotal + splitDeliveryFee + splitServiceFee).toFixed(2)}</strong></p>
-                            </div>`;
+
+                            let splitDeliveryFee = 0;
+                            let splitServiceFee = 0;
+                            if (usersWithItems > 0) {
+                                splitDeliveryFee = deliveryFee / usersWithItems;
+                                splitServiceFee = serviceFee / usersWithItems;
+                            }
+
+                            // add fees to the user's breakdown only if they have items
+                            if (userTotal > 0) {
+                                userItemsHtml += ` 
+                                    <p>Delivery Fee Share: £${splitDeliveryFee.toFixed(2)}</p>
+                                    <p>Service Fee Share: £${splitServiceFee.toFixed(2)}</p>
+                                    <p><strong>Total for ${userEmail}: £${(userTotal + splitDeliveryFee + splitServiceFee).toFixed(2)}</strong></p>
+                                `;
+                            } else {
+                                userItemsHtml += `
+                                    <p><strong>Total for ${userEmail}: £${userTotal.toFixed(2)}</strong></p>
+                                `;
+                            }
 
                             usersContainer.innerHTML += userItemsHtml;
-                            //Grand total
-                            grandTotal += userTotal + splitDeliveryFee + splitServiceFee;
+
+                            grandTotal += userTotal + (userTotal > 0 ? splitDeliveryFee + splitServiceFee : 0);
                         }
-                        resolve(); 
+                        resolve();
                     });
                 })
             );
@@ -83,17 +97,16 @@ function fetchCartData(householdId) {
 
         Promise.all(userPromises).then(() => {
             console.log("Receipt HTML after processing users:");
-            //total price update again
+
             const totalPriceElement = document.getElementById("receipt-total-price");
             totalPriceElement.textContent = grandTotal.toFixed(2);
-            //update users receipt
+
             const receiptFooter = document.getElementById("receipt-footer");
             receiptFooter.innerHTML = `
-                <p>Total Price (including fees): $${grandTotal.toFixed(2)}</p>
+                <p>Total Price (including fees): £${grandTotal.toFixed(2)}</p>
                 <button id="download-receipt-btn">Download Receipt</button>
                 <button id="return-home-btn">Return to Homepage</button>
             `;
-
 
             const downloadButton = document.getElementById("download-receipt-btn");
             downloadButton.addEventListener("click", downloadReceipt);
@@ -104,10 +117,9 @@ function fetchCartData(householdId) {
     });
 }
 
-
 function downloadReceipt() {
     const receiptContent = document.getElementById("receipt-container").innerText;
-    
+
     if (!receiptContent.trim()) {
         alert("There is no receipt content to download.");
         return;

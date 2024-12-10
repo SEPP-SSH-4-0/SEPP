@@ -3,6 +3,8 @@ import { ref, get, push, update } from "https://www.gstatic.com/firebasejs/11.0.
 import { auth, db } from "./firebase-config.js"; 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
+const cartCountElement = document.getElementById('cart-count'); 
+
 // fetch data from firebase realtime db to be displayed
 function displayProducts(category, containerId) {
     const dbRef = ref(db, 'products');
