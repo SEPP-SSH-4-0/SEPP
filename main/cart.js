@@ -6,12 +6,10 @@ const cartSummary = document.getElementById("cart-summary");
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        console.log("User is logged in:", user.uid); // Debug: log user UID
         const userRef = ref(db, `users/${user.uid}`);
         get(userRef).then((snapshot) => {
             if (snapshot.exists()) {
                 const householdId = snapshot.val().householdId;
-                console.log("Household ID:", householdId); // Debug: log household ID
                 fetchCartData(householdId);
             } else {
                 alert("User not found in the database.");
@@ -27,7 +25,6 @@ onAuthStateChanged(auth, (user) => {
 function fetchCartData(householdId) {
     const cartRef = ref(db, `households/${householdId}/cart`);
 
-    console.log("Fetching cart data for household:", householdId); // Debug: log the cart reference
     onValue(cartRef, (snapshot) => {
         cartSummary.innerHTML = "";
         let grandTotal = 0; 
