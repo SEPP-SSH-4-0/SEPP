@@ -54,21 +54,21 @@ function fetchCartData(householdId) {
 
                                 userItemsHtml += `
                                     <div>
-                                        <p>${product.name} - $${product.price.toFixed(2)} x ${product.quantity} = $${itemTotal.toFixed(2)}</p>
+                                        <p>${product.name} - £${product.price.toFixed(2)} x ${product.quantity} = £${itemTotal.toFixed(2)}</p>
                                     </div>
                                 `;
                             });
                             //Calculation
-                            const deliveryFee = 5.00;
-                            const serviceFee = 2.00;
+                            const deliveryFee = 3.99;
+                            const serviceFee = 2.79;
                             const numUsers = snapshot.size; 
                             const splitDeliveryFee = deliveryFee / numUsers;
                             const splitServiceFee = serviceFee / numUsers;
                             //Fees breakdown
                             userItemsHtml += ` 
-                                <p>Delivery Fee Share: $${splitDeliveryFee.toFixed(2)}</p>
-                                <p>Service Fee Share: $${splitServiceFee.toFixed(2)}</p>
-                                <p><strong>Total for ${userEmail}: $${(userTotal + splitDeliveryFee + splitServiceFee).toFixed(2)}</strong></p>
+                                <p>Delivery Fee Share: £${splitDeliveryFee.toFixed(2)}</p>
+                                <p>Service Fee Share: £${splitServiceFee.toFixed(2)}</p>
+                                <p><strong>Total for ${userEmail}: £${(userTotal + splitDeliveryFee + splitServiceFee).toFixed(2)}</strong></p>
                             </div>`;
 
                             usersContainer.innerHTML += userItemsHtml;

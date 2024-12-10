@@ -20,7 +20,7 @@ signUpForm.addEventListener("submit", (event) => {
                 householdId: null 
             })
             .then(() => {
-                alert("User signed up and saved to database!");
+                alert("Account created successfully!");
                 window.location.href = "login.html"; // redirect to login.html after successful account creation
             })
             .catch((error) => {

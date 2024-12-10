@@ -4,6 +4,8 @@ import { auth, db } from "./firebase-config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { ref, onValue, remove } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
+const cartSummary = document.getElementById("cart-summary");
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const userRef = ref(db, `users/${user.uid}`);
@@ -54,7 +56,7 @@ function fetchCartData(householdId) {
         
                             userCartHtml += `
                                 <div class="cart-product">
-                                    <p>${product.name} - $${product.price.toFixed(2)} x ${product.quantity} = $${itemTotal.toFixed(2)}</p>
+                                    <p>${product.name} - £${product.price.toFixed(2)} x ${product.quantity} = £${itemTotal.toFixed(2)}</p>
                                     <button class="remove-item-btn" data-user-id="${userId}" data-item-id="${itemId}">Remove</button>
                                 </div>
                             `;
@@ -102,24 +104,24 @@ function fetchCartData(householdId) {
 
             // splitting fees equally
             const numUsers = userBreakdowns.length;
-            const splitDelivery = deliveryFee / numUsers;
-            const splitService = serviceFee / numUsers;
+            const splitDeliveryFee = deliveryFee / numUsers;
+            const splitServiceFee = serviceFee / numUsers;
 
             // each user breakdown
             const cartSummaryDetails = document.getElementById("cart-summary-details");
-            cartSummaryDetails.innerHTML = ""; // Clear previous content
+            cartSummaryDetails.innerHTML = ""; 
             userBreakdowns.forEach((user) => {
                 const userFinalTotal = user.total + splitDeliveryFee + splitServiceFee;
                 cartSummaryDetails.innerHTML += `
                     <div class="cart-summary-user">
                         <h4>${user.email}'s Breakdown</h4>
-                        <p>Subtotal (Items): $${user.total.toFixed(2)}</p>
-                        <p>Delivery Fee Share: $${splitDelivery.toFixed(2)}</p>
-                        <p>Service Fee Share: $${splitService.toFixed(2)}</p>
-                        <p><strong>Final Total: $${userFinalTotal.toFixed(2)}</strong></p>
-                        <hr />
+                        <p>Subtotal (Items): £${user.total.toFixed(2)}</p>
+                        <p>Delivery Fee Share: £${splitDeliveryFee.toFixed(2)}</p>
+                        <p>Service Fee Share: £${splitServiceFee.toFixed(2)}</p>
+                        <p><strong>Final Total: £${userFinalTotal.toFixed(2)}</strong></p>
+                        <hr/>
                     </div>
-                `;
+                `; 
             });
 
             document.getElementById("delivery-fee").innerText = deliveryFee.toFixed(2);
@@ -135,7 +137,6 @@ function removeCartItem(householdId, userId, itemId){
     const itemRef = ref(db, `households/${householdId}/cart/${userId}/items/${itemId}`);
     remove(itemRef)
         .then(() => {
-            alert("Item removed successfully.");
         })
         .catch((error) => {
             console.error("Error removing item:", error);
