@@ -81,7 +81,7 @@ function addToSharedCart(productId, productName, productPrice) {
             });
         } else {
             alert("Please log in first.");
-            window.location.href = "main/login.html";
+            window.location.href = "login.html";
         }
     });
 }
