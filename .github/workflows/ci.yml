@@ -4,9 +4,19 @@ on:
   push:
     branches:
       - main
+      - gh-pages
+      - Maximus-Branch
+      - px's-branch
+      - SongYu-branch
+      - yh's-branch
   pull_request:
     branches:
       - main
+      - gh-pages
+      - Maximus-Branch
+      - px's-branch
+      - SongYu-branch
+      - yh's-branch
 
 jobs:
   test-and-build:
