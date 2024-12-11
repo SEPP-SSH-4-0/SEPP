@@ -21,7 +21,7 @@ signUpForm.addEventListener("submit", (event) => {
             })
             .then(() => {
                 alert("Account created successfully!");
-                window.location.href = "login.html"; // redirect to login.html after successful account creation
+                window.location.href = "main/login.html"; // redirect to login.html after successful account creation
             })
             .catch((error) => {
                 alert("Error creating account. Please try again.");
