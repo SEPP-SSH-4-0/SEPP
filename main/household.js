@@ -43,7 +43,7 @@ createHouseholdForm.addEventListener("submit", (event) => {
             }
         } else {
             alert("You must be logged in to perform this action.");
-            window.location.href = "login.html";
+            window.location.href = "main/login.html";
         }
     });
 });
@@ -107,7 +107,7 @@ joinHouseholdForm.addEventListener("submit", (event) => {
             }
         } else {
             alert("You must be logged in to perform this action.");
-            window.location.href = "login.html";
+            window.location.href = "main/login.html";
         }
     });
 });

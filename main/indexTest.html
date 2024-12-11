@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Tests - Jasmine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine.min.css">
+</head>
+<body>
+    <h1>Unit Test Results</h1>
+    <div id="results"></div>
+
+    <!-- Include Jasmine JS files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine-html.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/boot.min.js"></script>
+
+    <!-- Include your application JS file as a module -->
+    <script type="module" src="index.js"></script> <!-- Make sure to set type="module" -->
+
+    <!-- Include your Jasmine test cases file -->
+    <script src="indexTest.js"></script>
+</body>
+</html>
