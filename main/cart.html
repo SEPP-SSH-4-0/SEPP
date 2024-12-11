@@ -1,0 +1,46 @@
+<!-- redirected to this page after clicking on cart icon from index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="main/cart.css">
+</head>
+<body>
+
+    <header>
+        <h1>Shopping Cart</h1>
+        <nav>
+            <a href="index.html">Back to Store</a>
+        </nav>
+    </header>
+
+    <section id="cart-section">
+        <div id="cart-items-container">
+            <h2>Your Cart</h2>
+            <div id="cart-summary"></div>
+            <div id="fees-box" class="fees-box">
+                <h2>Fees</h2>
+                <hr />
+                <p><strong>Delivery Fee:</strong> £<span id="delivery-fee">0.00</span></p>
+                <p><strong>Service Fee:</strong> £<span id="service-fee">0.00</span></p>
+                <p><strong>Total Amount:</strong> £<span id="total-amount">0.00</span></p>
+            </div>
+        </div>
+
+        <div id="cart-summary-container">
+            <h2>Cart Summary</h2>
+            <div id="cart-summary-details"></div>
+        </div>
+    </section>
+
+    <div id="checkout-btn" onclick="window.location.href='main/receipt.html'">
+        <button>Checkout</button>
+    </div>
+
+    <script type="module" src="main/cart.js"></script>
+
+</body>
+</html>
