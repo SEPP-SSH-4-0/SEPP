@@ -9,10 +9,12 @@ signUpForm.addEventListener("submit", (event) => {
 
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+    console.log("Collected email and password:", { email, password });
 
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
+            console.log('User created successfully in Firebase Auth:', user);
 
             // record the user's data to firebase's realtime db
             set(ref(db, `users/${user.uid}`), {
@@ -20,14 +22,17 @@ signUpForm.addEventListener("submit", (event) => {
                 householdId: null 
             })
             .then(() => {
+                console.log("User data saved in Realtime Database for:", { email });
                 alert("Account created successfully!");
                 window.location.href = "login.html"; // redirect to login.html after successful account creation
             })
             .catch((error) => {
+                console.error("Error saving user data in Realtime Database:", error);
                 alert("Error creating account. Please try again.");
             });
         })
         .catch((error) => {
+            console.error("Error creating user in Firebase Auth:", error);
             alert(error.message);
         });
 });

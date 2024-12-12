@@ -5,6 +5,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/fi
 const cartCountElement = document.getElementById('cart-count'); 
 
 function displayProducts(category, containerId) {
+    console.log(`Displaying products for category: ${category}`);
     const dbRef = ref(db, 'products');
     get(dbRef).then((snapshot) => {
         if (snapshot.exists()) {
@@ -30,6 +31,7 @@ function displayProducts(category, containerId) {
                     addToCartButton.addEventListener('click', () => addToSharedCart(productId, product.name, product.price));
                 }
             });
+            console.log(`Products displayed for category: ${category}`);
         } else {
             console.error("No products available");
         }
@@ -37,11 +39,13 @@ function displayProducts(category, containerId) {
 }
 
 function addToSharedCart(productId, productName, productPrice) {
+    console.log(`Adding to cart: ${productName}, Price: £${productPrice}, ID: ${productId}`);
     const quantityInput = document.getElementById(`${productId}-quantity`);
     const quantity = parseInt(quantityInput.value);
 
     if (isNaN(quantity) || quantity <= 0) {
         alert("Please enter a valid quantity.");
+        console.warn("Invalid quantity entered.");
         return;
     }
 
@@ -81,18 +85,21 @@ function addToSharedCart(productId, productName, productPrice) {
             });
         } else {
             alert("Please log in first.");
-            window.location.href = "login.html";
+            window.location.href = "main/login.html";
         }
     });
 }
 
 function incrementCartCount(quantity) {
+    console.log(`Incrementing cart count by: ${quantity}`);
     const currentCount = parseInt(cartCountElement.textContent);
     const newCount = isNaN(currentCount) ? quantity : currentCount + quantity;
     cartCountElement.textContent = newCount;
+    console.log(`New cart count: ${newCount}`);
 }
 
 function updateCartCount(householdId) {
+    console.log(`Updating cart count for household ID: ${householdId}`);
     const cartRef = ref(db, `households/${householdId}/cart`);
     onValue(cartRef, (snapshot) => {
         let totalItems = 0;
@@ -104,6 +111,7 @@ function updateCartCount(householdId) {
         });
 
         cartCountElement.textContent = totalItems;  // update  cart count based on fb data
+        console.log(`Updated cart count to: ${totalItems}`);
     });
 }
 

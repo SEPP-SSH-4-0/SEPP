@@ -40,12 +40,14 @@ function fetchCartData(householdId) {
                     onValue(userRef, (userSnapshot) => {
                         if (userSnapshot.exists()) {
                             const userEmail = userSnapshot.val().email; 
+                            console.log("User data fetched:", userEmail);
                             let userTotal = 0; 
                             let userItemsHtml = `<div class="user-receipt-container" id="user-${userId}">
                                                     <h3>User: ${userEmail}</h3>`;
                             const items = userCart.child("items").val() || {};
 
                             if (Object.keys(items).length === 0) {
+                                console.log(`No items in the cart for user: ${userEmail}`);
                                 userItemsHtml += "<p>No items in the cart.</p>";
                             } else {
                                 usersWithItems++;
@@ -55,6 +57,7 @@ function fetchCartData(householdId) {
                                     const itemTotal = product.price * product.quantity;
                                     userTotal += itemTotal;
 
+                                    console.log(`Item processed: ${product.name}, Total: £${itemTotal.toFixed(2)}`);
                                     userItemsHtml += ` 
                                         <div>
                                             <p>${product.name} - £${product.price.toFixed(2)} x ${product.quantity} = £${itemTotal.toFixed(2)}</p>
@@ -93,6 +96,7 @@ function fetchCartData(householdId) {
                 let userItemsHtml = document.getElementById(`user-${user.userId}`);
             
                 if (userTotal > 0) {
+                    console.log(`Adding fees for user ID: ${user.userId}`);
                     userItemsHtml.innerHTML += ` 
                         <p>Delivery Fee Share: £${splitDeliveryFee.toFixed(2)}</p>
                         <p>Service Fee Share: £${splitServiceFee.toFixed(2)}</p>
@@ -137,8 +141,10 @@ function downloadReceipt() {
     a.download = 'receipt.txt';
     a.click();
     URL.revokeObjectURL(url);
+    console.log("Receipt downloaded successfully.");
 }
 
 function returnToHomepage() {
+    console.log("Returning to homepage.");
     window.location.href = 'index.html';
 }
