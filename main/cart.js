@@ -6,23 +6,28 @@ const cartSummary = document.getElementById("cart-summary");
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
+        console.log("User is authenticated:", user);
         const userRef = ref(db, `users/${user.uid}`);
         get(userRef).then((snapshot) => {
             if (snapshot.exists()) {
+                console.log("User data found in database:", snapshot.val());
                 const householdId = snapshot.val().householdId;
                 fetchCartData(householdId);
             } else {
+                console.error("User not found in the database.");
                 alert("User not found in the database.");
             }
         }).catch((error) => {
             console.error("Error fetching user data:", error);
         });
     } else {
+        console.warn("No authenticated user. Redirecting to login.");
         alert("Please log in first.");
     }
 });
 
 function fetchCartData(householdId) {
+    console.log("Fetching cart data for household ID:", householdId);
     const cartRef = ref(db, `households/${householdId}/cart`);
 
     onValue(cartRef, (snapshot) => {
@@ -43,6 +48,7 @@ function fetchCartData(householdId) {
             const userId = userCart.key; 
             const userTask = new Promise((resolve, reject) => {
                 const userRef = ref(db, `users/${userId}`);
+                console.log("Processing cart for user ID:", userId);
                 onValue(userRef, (userSnapshot) => {
                     if (userSnapshot.exists()) {
                         const userEmail = userSnapshot.val().email;
